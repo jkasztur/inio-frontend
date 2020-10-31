@@ -1,22 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { getAxios } from "../axios/client";
 
-export const Status = () => {
+export const Status: React.FC = () => {
   const [serverStatus, setServerStatus] = useState("Loading...");
   const [dbStatus, setDbStatus] = useState("Loading...");
-
-  getAxios()
-    .get("/status")
-    .then((value) => {
-      const { ok, db } = value.data;
-      setServerStatus(ok ? "ok" : "Failed to connect");
-      setDbStatus(db);
-    })
-    .catch((err) => {
-      setServerStatus("Failed to connect");
-      setDbStatus("Failed to connect");
-    });
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getAxios().get("/status");
+        const { ok, db } = response.data;
+        setServerStatus(ok ? "ok" : "Failed to connect");
+        setDbStatus(db);
+      } catch (err) {
+        setServerStatus("Failed to connect");
+        setDbStatus("Failed to connect");
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <>
