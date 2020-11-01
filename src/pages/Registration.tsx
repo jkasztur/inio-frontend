@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import React from "react";
 import { useState } from "react";
 import { getAxios } from "../axios/client";
@@ -6,6 +7,7 @@ export const Registration = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
   function handleChangeUsername(e: any) {
     setIsSubmitted(false);
@@ -19,13 +21,27 @@ export const Registration = () => {
 
   function handleSubmit(event: any) {
     event.preventDefault();
-    const postData = async () => {
-      const response = await getAxios().post("/auth/register", {});
-      console.log(response.data);
+    if (userName.length > 0 && password.length > 0) {
+      const postData = async () => {
+        try {
+          const response = await getAxios().post("/auth/register", {
+            userName,
+            password,
+          });
 
-      setIsSubmitted(true);
-    };
-    postData();
+          setIsSubmitted(true);
+        } catch (err) {
+          setError(
+            `message= ${err.message}, data= ${JSON.stringify(
+              err.response?.data
+            )}`
+          );
+        }
+      };
+      postData();
+    } else {
+      setError("Some input is empty");
+    }
   }
 
   return (
@@ -54,6 +70,12 @@ export const Registration = () => {
           <label>Username: {userName}</label>
           <div />
           <label>Password: {password}</label>
+        </>
+      )}
+      <div />
+      {error.length > 0 && (
+        <>
+          <h1 color="red">{error} </h1>
         </>
       )}
     </>
