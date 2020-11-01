@@ -2,8 +2,9 @@ import { AxiosError } from "axios";
 import React from "react";
 import { useState } from "react";
 import { getAxios } from "../axios/client";
+import { ErrorMessage } from "../components/ErrorMessage";
 
-export const Registration = () => {
+export const Registration: React.FC = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -73,11 +74,7 @@ export const Registration = () => {
         </>
       )}
       <div />
-      {error.length > 0 && (
-        <>
-          <h1 color="red">{error} </h1>
-        </>
-      )}
+      {error.length > 0 && <ErrorMessage message={error} />}
     </>
   );
 };
