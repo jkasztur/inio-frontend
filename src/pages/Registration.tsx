@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { getAxios } from "../axios/client";
 
 export const Registration = () => {
   const [userName, setUserName] = useState("");
@@ -7,7 +8,6 @@ export const Registration = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   function handleChangeUsername(e: any) {
-    console.log(e.target.value);
     setIsSubmitted(false);
     setUserName(e.target.value);
   }
@@ -19,7 +19,13 @@ export const Registration = () => {
 
   function handleSubmit(event: any) {
     event.preventDefault();
-    setIsSubmitted(true);
+    const postData = async () => {
+      const response = await getAxios().post("/auth/register", {});
+      console.log(response.data);
+
+      setIsSubmitted(true);
+    };
+    postData();
   }
 
   return (
