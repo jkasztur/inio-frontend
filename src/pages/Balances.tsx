@@ -20,12 +20,12 @@ export const Balances: React.FC = () => {
 	}, []);
 
 	return (
-		<>
+		<div style={{ flexDirection: 'column' }}>
 			<h2>Balances</h2>
 			<div />
 			<h3>Kraken</h3>
 			<div />
 			<h3>{krakenBalance} {krakenCurrency}</h3>
-		</>
+		</div>
 	);
 };
