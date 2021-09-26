@@ -1,6 +1,6 @@
-import { AxiosError } from "axios";
 import React from "react";
 import { useState } from "react";
+import { useCookies } from "react-cookie";
 import { getAxios } from "../axios/client";
 import { ErrorMessage } from "../components/ErrorMessage";
 
@@ -9,6 +9,7 @@ export const Registration: React.FC = () => {
 	const [password, setPassword] = useState("");
 	const [isSubmitted, setIsSubmitted] = useState(false);
 	const [error, setError] = useState("");
+	const [cookies, setCookie] = useCookies(['accessToken'])
 
 	function handleChangeUsername(e: any) {
 		setIsSubmitted(false);
@@ -29,8 +30,9 @@ export const Registration: React.FC = () => {
 						userName,
 						password,
 					});
-
+					setCookie('accessToken', response.data.accessToken)
 					setIsSubmitted(true);
+					setError('')
 				} catch (err) {
 					setError(
 						`message= ${err.message}, data= ${JSON.stringify(
@@ -68,9 +70,7 @@ export const Registration: React.FC = () => {
 			{isSubmitted && (
 				<>
 					<div />
-					<label>Username: {userName}</label>
-					<div />
-					<label>Password: {password}</label>
+					<label style={{ color: 'green' }}>Successfully registered!</label>
 				</>
 			)}
 			<div />
