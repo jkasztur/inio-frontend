@@ -8,7 +8,9 @@ export const Balances: React.FC = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const response = await getAxios().get("/kraken/balance");
+				const response = await getAxios().get("/kraken/balance", {
+					withCredentials: true
+				});
 				const { amount, currency } = response.data;
 				setKrakenBalance(amount);
 				setKrakenCurrency(currency)
