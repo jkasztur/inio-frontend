@@ -6,14 +6,15 @@ import { getAxios } from "../axios/client";
 export const Balances: React.FC = () => {
 	const [krakenBalance, setKrakenBalance] = useState(0);
 	const [krakenCurrency, setKrakenCurrency] = useState('USD');
-	const [cookies] = useCookies(['accessToken'])
+	const [cookies] = useCookies(['accessToken', 'accountId'])
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
 				const response = await getAxios().get("/kraken/balance", {
 					headers: {
-						'x-access-token': cookies.accessToken
+						'x-access-token': cookies.accessToken,
+						'x-account-id': cookies.accountId
 					},
 					withCredentials: true
 				});

@@ -12,6 +12,7 @@ export default function Menu() {
 				<MenuItem name='Home' path='/' />
 				{!cookies.accessToken && <MenuItem name='Sign in' path='/signin' />}
 				{cookies.accessToken && <MenuItem name='Balances' path='/balances' />}
+				{cookies.accessToken && <MenuItem name='Settings' path='/settings' />}
 				<MenuItem name='Status' path='/status' />
 			</nav>
 		</Box>

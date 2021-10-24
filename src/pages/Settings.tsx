@@ -5,34 +5,38 @@ import { useCookies } from "react-cookie";
 import { getAxios } from "../axios/client";
 import { ErrorMessage } from "../components/ErrorMessage";
 
-export const Registration: React.FC = () => {
-	const [userName, setUserName] = useState("");
-	const [password, setPassword] = useState("");
+export const Settings: React.FC = () => {
+	const [krakenApiKey, setKrakenApiKey] = useState("");
+	const [krakenSecret, setKrakenSecret] = useState("");
 	const [isSubmitted, setIsSubmitted] = useState(false);
 	const [error, setError] = useState("");
-	const [cookies, setCookie] = useCookies(['accessToken', 'accountId'])
+	const [cookies] = useCookies(['accessToken', 'accountId'])
 
-	function handleChangeUsername(e: any) {
+	function handleChangeKrakenApiKey(e: any) {
 		setIsSubmitted(false);
-		setUserName(e.target.value);
+		setKrakenApiKey(e.target.value);
 	}
 
-	function handleChangePassword(e: any) {
+	function handleChangeKrakenSecret(e: any) {
 		setIsSubmitted(false);
-		setPassword(e.target.value);
+		setKrakenSecret(e.target.value);
 	}
 
-	function handleSubmit(event: any) {
+	function handleSubmitKraken(event: any) {
 		event.preventDefault();
-		if (userName.length > 0 && password.length > 0) {
+		if (krakenApiKey.length > 0 && krakenSecret.length > 0) {
 			const postData = async () => {
 				try {
-					const response = await getAxios().post("/auth/register", {
-						userName,
-						password,
+					await getAxios().post("/kraken/setup", {
+						apiKey: krakenApiKey,
+						secret: krakenSecret,
+					}, {
+						headers: {
+							'x-access-token': cookies.accessToken,
+							'x-account-id': cookies.accountId
+						},
+						withCredentials: true
 					});
-					setCookie('accessToken', response.data.accessToken)
-					setCookie('accountId', response.data.accountId)
 					setIsSubmitted(true);
 					setError('')
 				} catch (err) {
@@ -51,20 +55,17 @@ export const Registration: React.FC = () => {
 
 	return (
 		<div style={{ flexDirection: 'column' }}>
-			<h2>Register</h2>
-			<form onSubmit={handleSubmit}>
+			<h2>Settings</h2>
+			<h1>Kraken</h1>
+			<form onSubmit={handleSubmitKraken}>
 				<label>
-					User name:
-					<input type="text" name="userName" onChange={handleChangeUsername} />
+					API key:
+					<input type="text" name="apiKey" onChange={handleChangeKrakenApiKey} />
 				</label>
 				<div />
 				<label>
-					Password:
-					<input
-						type="password"
-						name="password"
-						onChange={handleChangePassword}
-					/>
+					Secret:
+					<input type="text" name="secret" onChange={handleChangeKrakenSecret} />
 				</label>
 				<div />
 				<input type="submit" value="Submit" />
@@ -72,7 +73,7 @@ export const Registration: React.FC = () => {
 			{isSubmitted && (
 				<>
 					<div />
-					<label style={{ color: 'green' }}>Successfully registered!</label>
+					<label style={{ color: 'green' }}>Successfully modified Kraken settings!</label>
 				</>
 			)}
 			<div />
