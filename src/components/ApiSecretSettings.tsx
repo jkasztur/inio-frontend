@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import MenuItem from './MenuItem'
 import { useCookies } from 'react-cookie'
 import { useState } from 'react';
 import { getAxios } from '../axios/client';
