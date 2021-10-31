@@ -9,31 +9,24 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { ErrorMessage } from './ErrorMessage';
 
-export default function ApiSecretSettings(props: { path: string, name: string }) {
-	const [apiKey, setApiKey] = useState("");
-	const [secret, setSecret] = useState("");
+export default function AddressSettings(props: { path: string, name: string }) {
+	const [address, setAddress] = useState("");
 	const [isSubmitted, setIsSubmitted] = useState(false);
 	const [error, setError] = useState("");
 	const [cookies] = useCookies(['accessToken', 'accountId'])
 
-	function handleChangeApiKey(e: any) {
+	function handleChangeAddress(e: any) {
 		setIsSubmitted(false);
-		setApiKey(e.target.value);
-	}
-
-	function handleChangeSecret(e: any) {
-		setIsSubmitted(false);
-		setSecret(e.target.value);
+		setAddress(e.target.value);
 	}
 
 	function handleSubmit(event: any) {
 		event.preventDefault();
-		if (apiKey.length > 0 && secret.length > 0) {
+		if (address.length > 0) {
 			const postData = async () => {
 				try {
 					await getAxios().post(props.path, {
-						apiKey: apiKey,
-						secret: secret,
+						address,
 					}, {
 						headers: {
 							'x-access-token': cookies.accessToken,
@@ -71,15 +64,8 @@ export default function ApiSecretSettings(props: { path: string, name: string })
 				<TextField
 					required
 					id="outlined-required"
-					label="API Key"
-					onChange={handleChangeApiKey}
-				/>
-				<div />
-				<TextField
-					required
-					id="outlined-required"
-					label="Secret"
-					onChange={handleChangeSecret}
+					label="Address / Wallet"
+					onChange={handleChangeAddress}
 				/>
 				<div />
 				<Button variant="outlined" type='submit'>Submit</Button>
