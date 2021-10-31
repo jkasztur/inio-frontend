@@ -21,7 +21,7 @@ export default function SingleBalance(props: { path: string, name: string, curre
 				withCredentials: true
 			});
 			const { amount, currency } = response.data;
-			setBalance(`${amount} ${currency}`);
+			setBalance(`${Intl.NumberFormat().format(amount)} ${currency}`);
 		} catch (err) {
 			setBalance(`0 ${props.currency}`);
 		}
