@@ -7,12 +7,14 @@ import { getAxios } from "../axios/client";
 
 export const Balances: React.FC = () => {
 	const [krakenBalance, setKrakenBalance] = useState('0');
+	const [binanceBalance, setBinanceBalance] = useState('0');
 	const [mainCurrency, setMainCurrency] = useState('CZK');
 	const [cookies] = useCookies(['accessToken', 'accountId'])
 
-	async function fetchData() {
+	async function fetchData(path: string, setBalanceFn: (value: any) => void) {
 		try {
-			const response = await getAxios().get("/kraken/balance", {
+			setBalanceFn(`Loading...`);
+			const response = await getAxios().get(path, {
 				headers: {
 					'x-access-token': cookies.accessToken,
 					'x-account-id': cookies.accountId
@@ -23,13 +25,14 @@ export const Balances: React.FC = () => {
 				withCredentials: true
 			});
 			const { amount, currency } = response.data;
-			setKrakenBalance(`${amount} ${currency}`);
+			setBalanceFn(`${amount} ${currency}`);
 		} catch (err) {
-			setKrakenBalance(`0 ${mainCurrency}`);
+			setBalanceFn(`0 ${mainCurrency}`);
 		}
 	}
 	useEffect(() => {
-		fetchData();
+		fetchData('/kraken/balance', setKrakenBalance);
+		fetchData('/binance/balance', setBinanceBalance);
 	}, [mainCurrency]);
 
 	return (
@@ -54,6 +57,10 @@ export const Balances: React.FC = () => {
 			<h3>Kraken</h3>
 			<div />
 			<h3>{krakenBalance}</h3>
+			<div />
+			<h3>Binance</h3>
+			<div />
+			<h3>{binanceBalance}</h3>
 		</div>
 	);
 };

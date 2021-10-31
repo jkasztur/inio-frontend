@@ -8,28 +8,41 @@ import { ErrorMessage } from "../components/ErrorMessage";
 export const Settings: React.FC = () => {
 	const [krakenApiKey, setKrakenApiKey] = useState("");
 	const [krakenSecret, setKrakenSecret] = useState("");
-	const [isSubmitted, setIsSubmitted] = useState(false);
+	const [binanceApiKey, setBinanceApiKey] = useState("");
+	const [binanceSecret, setBinanceSecret] = useState("");
+	const [isSubmittedKraken, setIsSubmittedKraken] = useState(false);
+	const [isSubmittedBinance, setIsSubmittedBinance] = useState(false);
 	const [error, setError] = useState("");
 	const [cookies] = useCookies(['accessToken', 'accountId'])
 
 	function handleChangeKrakenApiKey(e: any) {
-		setIsSubmitted(false);
+		setIsSubmittedKraken(false);
 		setKrakenApiKey(e.target.value);
 	}
 
 	function handleChangeKrakenSecret(e: any) {
-		setIsSubmitted(false);
+		setIsSubmittedKraken(false);
 		setKrakenSecret(e.target.value);
 	}
 
-	function handleSubmitKraken(event: any) {
+	function handleChangeBinanceApiKey(e: any) {
+		setIsSubmittedBinance(false);
+		setBinanceApiKey(e.target.value);
+	}
+
+	function handleChangeBinanceSecret(e: any) {
+		setIsSubmittedBinance(false);
+		setBinanceSecret(e.target.value);
+	}
+
+	function handleSubmit(event: any, path: string, apiKey: string, secret: string, setIsSubmitedFn: (data: any) => void) {
 		event.preventDefault();
-		if (krakenApiKey.length > 0 && krakenSecret.length > 0) {
+		if (apiKey.length > 0 && secret.length > 0) {
 			const postData = async () => {
 				try {
-					await getAxios().post("/kraken/setup", {
-						apiKey: krakenApiKey,
-						secret: krakenSecret,
+					await getAxios().post(path, {
+						apiKey: apiKey,
+						secret: secret,
 					}, {
 						headers: {
 							'x-access-token': cookies.accessToken,
@@ -37,7 +50,7 @@ export const Settings: React.FC = () => {
 						},
 						withCredentials: true
 					});
-					setIsSubmitted(true);
+					setIsSubmitedFn(true);
 					setError('')
 				} catch (err) {
 					setError(
@@ -52,6 +65,13 @@ export const Settings: React.FC = () => {
 			setError("Some input is empty");
 		}
 	}
+	function handleSubmitKraken(event: any) {
+		handleSubmit(event, '/kraken/setup', krakenApiKey, krakenSecret, setIsSubmittedKraken)
+	}
+	function handleSubmitBinance(event: any) {
+		handleSubmit(event, '/binance/setup', binanceApiKey, binanceSecret, setIsSubmittedBinance)
+	}
+
 
 	return (
 		<div style={{ flexDirection: 'column' }}>
@@ -70,10 +90,31 @@ export const Settings: React.FC = () => {
 				<div />
 				<input type="submit" value="Submit" />
 			</form>
-			{isSubmitted && (
+			{isSubmittedKraken && (
 				<>
 					<div />
 					<label style={{ color: 'green' }}>Successfully modified Kraken settings!</label>
+				</>
+			)}
+			<div />
+			<h1>Binance</h1>
+			<form onSubmit={handleSubmitBinance}>
+				<label>
+					API key:
+					<input type="text" name="apiKey" onChange={handleChangeBinanceApiKey} />
+				</label>
+				<div />
+				<label>
+					Secret:
+					<input type="text" name="secret" onChange={handleChangeBinanceSecret} />
+				</label>
+				<div />
+				<input type="submit" value="Submit" />
+			</form>
+			{isSubmittedBinance && (
+				<>
+					<div />
+					<label style={{ color: 'green' }}>Successfully modified Binance settings!</label>
 				</>
 			)}
 			<div />
