@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 import { getAxios } from "../axios/client";
 import { ErrorMessage } from "../components/ErrorMessage";
 
-export const Registration: React.FC = () => {
+export default function SignInForm(props: { endpoint: string, title: string }) {
 	const [userName, setUserName] = useState("");
 	const [password, setPassword] = useState("");
 	const [isSubmitted, setIsSubmitted] = useState(false);
@@ -27,7 +27,7 @@ export const Registration: React.FC = () => {
 		if (userName.length > 0 && password.length > 0) {
 			const postData = async () => {
 				try {
-					const response = await getAxios().post("/auth/register", {
+					const response = await getAxios().post(props.endpoint, {
 						userName,
 						password,
 					});
@@ -51,7 +51,7 @@ export const Registration: React.FC = () => {
 
 	return (
 		<div style={{ flexDirection: 'column' }}>
-			<h2>Register</h2>
+			<h2>{props.title}</h2>
 			<form onSubmit={handleSubmit}>
 				<label>
 					User name:

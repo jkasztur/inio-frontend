@@ -1,12 +1,11 @@
 import React from "react";
-import { Registration } from "./Registration";
-import { Login } from './Login'
+import SignInForm from "../components/SignInForm";
 
 export const Signin: React.FC = () => {
 	return (
 		<div style={{ flexDirection: 'row' }}>
-			<Registration />
-			<Login />
+			<SignInForm endpoint="/auth/register" title="Register" />
+			<SignInForm endpoint="/auth/login" title="Login" />
 		</div>
 	)
 };
