@@ -14,6 +14,8 @@ export const Settings: React.FC = () => {
 			<div />
 			<AddressSettings path='/eth/setup' name='Ethereum Mainnet' />
 			<div />
+			<AddressSettings path='/eth/whitelist' name='Ethereum Mainnet - Whitelist contract' />
+			<div />
 			<AddressSettings path='/bsc/setup' name='Binance Smart Chain' />
 		</div>
 	);
