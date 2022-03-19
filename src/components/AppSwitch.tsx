@@ -4,7 +4,10 @@ import { Home } from "../pages/Home";
 import { Status } from "../pages/Status";
 import { Balances } from "../pages/Balances";
 import { Signin } from "../pages/Signin";
-import { Settings } from "../pages/Settings";
+import { SettingsKraken } from "../pages/settings/SettingsKraken";
+import { SettingsBinance } from "../pages/settings/SettingsBinance";
+import { SettingsETH } from "../pages/settings/SettingsETH";
+import { SettingsBSC } from "../pages/settings/SettingsBSC";
 
 export default function AppSwitch() {
 	return (
@@ -18,8 +21,17 @@ export default function AppSwitch() {
 			<Route path="/balances">
 				<Balances />
 			</Route>
-			<Route path="/settings">
-				<Settings />
+			<Route path="/settings/kraken">
+				<SettingsKraken />
+			</Route>
+			<Route path="/settings/binance">
+				<SettingsBinance />
+			</Route>
+			<Route path="/settings/eth">
+				<SettingsETH />
+			</Route>
+			<Route path="/settings/bsc">
+				<SettingsBSC />
 			</Route>
 			<Route path="/">
 				<Home />

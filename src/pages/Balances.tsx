@@ -1,9 +1,7 @@
 import { FormControl, InputLabel, Select } from "@mui/material";
 import MenuItem from '@mui/material/MenuItem';
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
-import { useCookies } from "react-cookie";
-import { getAxios } from "../axios/client";
 import SingleBalance from "../components/SingleBalance";
 
 export const Balances: React.FC = () => {

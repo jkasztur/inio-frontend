@@ -10,7 +10,7 @@ export default function SignInForm(props: { endpoint: string, title: string }) {
 	const [password, setPassword] = useState("");
 	const [isSubmitted, setIsSubmitted] = useState(false);
 	const [error, setError] = useState("");
-	const [cookies, setCookie] = useCookies(['accessToken', 'accountId'])
+	const [_cookies, setCookie] = useCookies(['accessToken', 'accountId'])
 
 	function handleChangeUsername(e: any) {
 		setIsSubmitted(false);
