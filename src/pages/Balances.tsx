@@ -26,6 +26,9 @@ export const Balances: React.FC = () => {
 					<MenuItem value={'EUR'}>EUR</MenuItem>
 				</Select>
 			</FormControl>
+			<SingleBalance name='Kraken' path='/kraken/balance' currency={mainCurrency} />
+			<SingleBalance name='Binance' path='/binance/balance' currency={mainCurrency} />
+			<SingleBalance name='ETH Chain' path='/eth/balance' currency={mainCurrency} />
 			<SingleBalance name='BSC Chain' path='/bsc/balance' currency={mainCurrency} />
 		</div>
 	);
