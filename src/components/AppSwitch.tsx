@@ -8,6 +8,7 @@ import { SettingsKraken } from "../pages/settings/SettingsKraken";
 import { SettingsBinance } from "../pages/settings/SettingsBinance";
 import { SettingsETH } from "../pages/settings/SettingsETH";
 import { SettingsBSC } from "../pages/settings/SettingsBSC";
+import { SettingsAvax } from "../pages/settings/SettingsAvax";
 
 export default function AppSwitch() {
 	return (
@@ -32,6 +33,9 @@ export default function AppSwitch() {
 			</Route>
 			<Route path="/settings/bsc">
 				<SettingsBSC />
+			</Route>
+			<Route path="/settings/avax">
+				<SettingsAvax />
 			</Route>
 			<Route path="/">
 				<Home />

@@ -30,6 +30,7 @@ export const Balances: React.FC = () => {
 			<SingleBalance name='Binance' path='/binance/balance' currency={mainCurrency} />
 			<SingleBalance name='ETH Chain' path='/eth/balance' currency={mainCurrency} />
 			<SingleBalance name='BSC Chain' path='/bsc/balance' currency={mainCurrency} />
+			<SingleBalance name='Avax Chain' path='/avax/balance' currency={mainCurrency} />
 		</div>
 	);
 };

@@ -32,6 +32,7 @@ export default function Menu() {
 						<MenuItem name='Binance' path='/settings/binance' withPadding={true} />
 						<MenuItem name='ETH' path='/settings/eth' withPadding={true} />
 						<MenuItem name='BSC' path='/settings/bsc' withPadding={true} />
+						<MenuItem name='Avax' path='/settings/avax' withPadding={true} />
 					</List>
 				</Collapse>
 				<MenuItem name='Status' path='/status' />
