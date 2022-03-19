@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useCookies } from 'react-cookie';
 import { getAxios } from '../axios/client';
 
@@ -7,7 +7,7 @@ export default function SingleBalance(props: { path: string, name: string, curre
 	const [balance, setBalance] = useState('0');
 	const [cookies] = useCookies(['accessToken', 'accountId'])
 
-	async function fetchData() {
+	const fetchData = useCallback(async () => {
 		try {
 			setBalance(`Loading...`);
 			const response = await getAxios().get(props.path, {
@@ -25,11 +25,11 @@ export default function SingleBalance(props: { path: string, name: string, curre
 		} catch (err) {
 			setBalance(`0 ${props.currency}`);
 		}
-	}
+	}, [cookies, props])
 
 	useEffect(() => {
 		fetchData()
-	}, [props.currency]);
+	}, [props.currency, fetchData]);
 
 	return (
 		<>

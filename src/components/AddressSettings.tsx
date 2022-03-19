@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { ErrorMessage } from './ErrorMessage';
 
-export default function AddressSettings(props: { path: string, name: string }) {
+export default function AddressSettings(props: { path: string, name: string, refresh?: Function }) {
 	const [address, setAddress] = useState("");
 	const [isSubmitted, setIsSubmitted] = useState(false);
 	const [error, setError] = useState("");
@@ -35,6 +35,9 @@ export default function AddressSettings(props: { path: string, name: string }) {
 					});
 					setIsSubmitted(true);
 					setError('')
+					if (props.refresh) {
+						props.refresh()
+					}
 				} catch (err) {
 					setError(
 						`message= ${(err as AxiosError).message}, data= ${JSON.stringify(
