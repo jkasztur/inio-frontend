@@ -33,6 +33,7 @@
 		"web-vitals": "^0.2.4"
 	},
 	"scripts": {
+		"prestart": "npm install -g serve",
 		"start": "serve -s build",
 		"start:local": "REACT_APP_SERVER_HOST=http://localhost:5000/ react-scripts start",
 		"build": "react-scripts build",
