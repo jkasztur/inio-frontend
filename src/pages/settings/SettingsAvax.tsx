@@ -2,7 +2,7 @@ import React from "react";
 import AddressSettings from "../../components/AddressSettings";
 import { useCookies } from "react-cookie";
 export const SettingsAvax: React.FC = () => {
-	const [cookies] = useCookies(['accessToken', 'accountId'])
+	//const [cookies] = useCookies(['accessToken', 'accountId'])
 
 	return (
 		<div style={{ flexDirection: 'column' }}>
